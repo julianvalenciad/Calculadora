@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var textView: TextView
@@ -21,7 +22,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun calcularOperacion(operacion: String): Double {
+        // Divide la cadena en dos partes en función del operador (+, -, *, /)
+        val partes = operacion.split("[+\\-*/]".toRegex())
 
+        if (partes.size != 2) {
+            // La cadena no contiene exactamente dos números y un operador
+            return Double.NaN
+        }
+
+        val numero1 = partes[0].trim().toDoubleOrNull()
+        val numero2 = partes[1].trim().toDoubleOrNull()
+
+        if (numero1 == null || numero2 == null) {
+            // No se pudieron convertir ambas partes en números válidos
+            return Double.NaN
+        }
+
+        // Encuentra el operador en la cadena original
+        val operador = operacion.find { it in "+-*/" } ?: return Double.NaN
+
+        // Realiza la operación matemática
+        return when (operador) {
+            '+' -> numero1 + numero2
+            '-' -> numero1 - numero2
+            '*' -> numero1 * numero2
+            '/' -> {
+                if (numero2 != 0.0) {
+                    numero1 / numero2
+                } else {
+                    Double.NaN // División por cero
+                }
+            }
+            else -> Double.NaN
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,15 +89,15 @@ class MainActivity : AppCompatActivity() {
         actualizarTexto(textView,"+",suma)
         val resta = findViewById<Button>(R.id.resta)
         actualizarTexto(textView,"-", resta)
-       // val multi = findViewById<Button>(R.id.multiplicar)
-       // val division = findViewById<Button>(R.id.division)
-       // actualizarTexto(textView,"1",button_1)
+        val multi = findViewById<Button>(R.id.Multiplicar)
+        actualizarTexto(textView,"*", multi)
+        val division = findViewById<Button>(R.id.Dividir)
+        actualizarTexto(textView,"/", division)
+
         val igual = findViewById<Button>(R.id.Igual)
-        actualizarTexto(textView,"-", resta)
-
-
-
-
-
+        igual.setOnClickListener {
+            val textoActual = textView.text.toString()
+            textView.text = (calcularOperacion(textoActual)).toString()
+        }
     }
 }
