@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         // Asigna el TextView de la interfaz a la variable textView
         textView = findViewById(R.id.editext_oper)
 
+        //Numeros
         val button_0 = findViewById<Button>(R.id.Number_0)
         actualizarTexto(textView,"0",button_0)
         val button_1 = findViewById<Button>(R.id.number_1)
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         val button_9 = findViewById<Button>(R.id.number_9)
         actualizarTexto(textView,"9",button_9)
 
-
+        //Operaciones
         val suma = findViewById<Button>(R.id.suma)
         actualizarTexto(textView,"+",suma)
         val resta = findViewById<Button>(R.id.resta)
@@ -96,10 +97,10 @@ class MainActivity : AppCompatActivity() {
         actualizarTexto(textView,"*", multi)
         val division = findViewById<Button>(R.id.Dividir)
         actualizarTexto(textView,"/", division)
-
         val punto = findViewById<Button>(R.id.Punto)
         actualizarTexto(textView,".", punto)
 
+        //Igual
         val igual = findViewById<Button>(R.id.Igual)
         igual.setOnClickListener {
             val textoActual = textView.text.toString()
